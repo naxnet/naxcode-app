@@ -29,7 +29,7 @@ gem 'jbuilder', '~> 2.7'
 gem 'devise', '~> 4.7.1'
 
 gem 'bootstrap', '~> 4.4.1'
-gem 'jquery-rails'
+gem 'font_awesome5_rails'
 
 # soft-delete
 gem 'acts_as_paranoid'

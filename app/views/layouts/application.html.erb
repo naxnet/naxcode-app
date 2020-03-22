@@ -1,15 +1,104 @@
 <!DOCTYPE html>
-<html>
+<html class="h-100">
   <head>
     <title>AutoreviewApp</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <meta name="theme-color" content="#563d7c">
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+
+      main > .container {
+        padding: 60px 15px 0;
+      }
+
+      .footer {
+        background-color: #f5f5f5;
+      }
+
+      .footer > .container {
+        padding-right: 15px;
+        padding-left: 15px;
+      }
+
+      code {
+        font-size: 80%;
+      }
+    </style>
   </head>
 
-  <body>
-    <%= yield %>
+  <body class="d-flex flex-column h-100">
+    <header>
+      <!-- Fixed navbar -->
+      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="#">NaxCode Review</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav mr-auto">
+            <!-- <li class="nav-item active">
+              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+            </li> -->
+          </ul>
+
+            <% if current_professor != nil %>
+              <ul class="navbar-nav  my-2 my-sm-0">
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Professor: <%= current_professor.name %>
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">
+                      Edit profile
+                    </a>
+                    <a class="dropdown-item" href="#">Edit password</a>
+                    <div class="dropdown-divider"></div>
+                    <%= link_to('Logout', destroy_professor_session_path, method: :delete, class: "dropdown-item") %>
+                  </div>
+                </li>
+              </ul>
+            <% end %>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Begin page content -->
+    <main role="main" class="flex-shrink-0">
+      <div class="container">
+        <%= yield %>
+      </div>
+    </main>
+
+    <footer class="footer mt-auto py-3">
+      <div class="container">
+        <span class="text-muted">Place sticky footer content here.</span>
+      </div>
+    </footer>
+    <!-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script> -->
+    <!-- <script>window.jQuery || document.write('<script src="/docs/4.4/assets/js/vendor/jquery.slim.min.js"><\/script>')</script><script src="/docs/4.4/dist/js/bootstrap.bundle.min.js" integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" crossorigin="anonymous"></script> -->
+
   </body>
 </html>
