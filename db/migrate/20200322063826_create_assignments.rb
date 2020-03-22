@@ -6,6 +6,8 @@ class CreateAssignments < ActiveRecord::Migration[6.0]
       t.timestamp :init_time
       t.timestamp :end_time
 
+
+      t.datetime :deleted_at, index: true
       t.timestamps
     end
   end

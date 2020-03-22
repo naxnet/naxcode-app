@@ -31,6 +31,8 @@ gem 'devise', '~> 4.7.1'
 gem 'bootstrap', '~> 4.4.1'
 gem 'jquery-rails'
 
+# soft-delete
+gem 'acts_as_paranoid'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
 
