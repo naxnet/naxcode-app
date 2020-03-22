@@ -1,14 +1,10 @@
 class Professors::CoursesController < ApplicationController
   before_action :authenticate_professor!
-  before_action :set_course, only: [:show, :edit, :update, :destroy]
+  before_action :set_course, only: [:edit, :update, :destroy]
 
   def index
     @courses = current_professor.courses
   end
-
-  def show
-  end
-
   def new
     @course = Course.new
   end
@@ -22,7 +18,7 @@ class Professors::CoursesController < ApplicationController
     respond_to do |format|
       if @course.save
         current_professor.courses << @course
-        format.html { redirect_to [:professors, @course], notice: 'Course was successfully created.' }
+        format.html { redirect_to professors_courses_url, notice: 'Course was successfully created.' }
       else
         format.html { render :new }
       end
@@ -34,7 +30,7 @@ class Professors::CoursesController < ApplicationController
   def update
     respond_to do |format|
       if @course.update(course_params)
-        format.html { redirect_to [:professors, @course], notice: 'Course was successfully updated.' }
+        format.html { redirect_to professors_courses_url, notice: 'Course was successfully updated.' }
       else
         format.html { render :edit }
       end

@@ -1,12 +1,17 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Courses</h1>
+<h1>My Courses</h1>
 
-<table>
+<%= link_to new_professors_course_path, class:"btn btn-success " do %>
+  <%= fa_icon('plus-circle', type: :solid, text: ' Create')  %>
+<% end %>
+
+
+<table  class="table table-striped">
   <thead>
     <tr>
       <th>Name</th>
-      <th colspan="3">Actions</th>
+      <th colspan="2">Actions</th>
     </tr>
   </thead>
 
@@ -14,14 +19,18 @@
     <% @courses.each do |course| %>
       <tr>
         <td><%= course.name %></td>
-        <td><%= link_to 'Show', [:professors, course] %></td>
-        <td><%= link_to 'Edit', edit_professors_course_path(course) %></td>
-        <td><%= link_to 'Destroy', [:professors, course], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>
+          <%= link_to edit_professors_course_path(course), class: "btn btn-outline-warning" do %>
+            <%= fa_icon('edit', type: :solid, text: ' Edit')  %>
+          <% end %>
+        </td>
+        <td>
+          <%= link_to [:professors, course], method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-outline-danger" do %>
+            <%= fa_icon('trash', type: :solid, text: ' Delete')  %>
+          <% end %>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
-
-<%= link_to 'New Course', new_professors_course_path %>

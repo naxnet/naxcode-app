@@ -11,12 +11,13 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :name %>
-    <%= form.text_field :name %>
+    <%= form.text_field :name, class: "form-control", placeholder: "Name of course" %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= link_to 'Back', professors_courses_path, class: "btn btn-light" %>
+    <%= form.submit class: "btn btn-primary" %>
   </div>
 <% end %>
