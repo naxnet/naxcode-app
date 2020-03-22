@@ -10,7 +10,9 @@
 <table  class="table table-striped">
   <thead>
     <tr>
-      <th>Name</th>
+      <th>
+        Name
+      </th>
       <th colspan="2">Actions</th>
     </tr>
   </thead>
@@ -18,7 +20,11 @@
   <tbody>
     <% @courses.each do |course| %>
       <tr>
-        <td><%= course.name %></td>
+        <td>
+          <%= link_to [:professors, course], class:"btn btn-link" do %>
+            <%= course.name %>
+          <% end %>
+        </td>
         <td>
           <%= link_to edit_professors_course_path(course), class: "btn btn-outline-warning" do %>
             <%= fa_icon('edit', type: :solid, text: ' Edit')  %>

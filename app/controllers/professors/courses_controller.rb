@@ -1,12 +1,15 @@
 class Professors::CoursesController < ApplicationController
   before_action :authenticate_professor!
-  before_action :set_course, only: [:edit, :update, :destroy]
+  before_action :set_course, only: [:show, :edit, :update, :destroy]
 
   def index
     @courses = current_professor.courses
   end
   def new
     @course = Course.new
+  end
+
+  def show
   end
 
   def edit
