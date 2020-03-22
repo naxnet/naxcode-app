@@ -81,6 +81,10 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
+    dotenv (2.7.5)
+    dotenv-rails (2.7.5)
+      dotenv (= 2.7.5)
+      railties (>= 3.2, < 6.1)
     erubi (1.9.0)
     ffi (1.12.2)
     globalid (0.4.2)
@@ -106,11 +110,11 @@ GEM
     mini_portile2 (2.4.0)
     minitest (5.14.0)
     msgpack (1.3.3)
+    mysql2 (0.5.3)
     nio4r (2.5.2)
     nokogiri (1.10.9)
       mini_portile2 (~> 2.4.0)
     orm_adapter (0.5.0)
-    pg (1.2.3)
     public_suffix (4.0.3)
     puma (4.3.3)
       nio4r (~> 2.0)
@@ -217,9 +221,10 @@ DEPENDENCIES
   byebug
   capybara (>= 2.15)
   devise (~> 4.7.1)
+  dotenv-rails
   jbuilder (~> 2.7)
   listen (>= 3.0.5, < 3.2)
-  pg (>= 0.18, < 2.0)
+  mysql2
   puma (~> 4.1)
   rails (~> 6.0.2, >= 6.0.2.1)
   sass-rails (>= 6)
