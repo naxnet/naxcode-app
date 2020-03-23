@@ -25,7 +25,7 @@ class Professors::CoursesController < ApplicationController
   def subscribe
     respond_to do |format|
       if @course
-        if ProfessorSubscription.find_by(professor: current_professor, course: @curses) or current_professor.courses.find_by(id: @course)
+        if ProfessorSubscription.find_by(professor: current_professor, course: @course) or current_professor.courses.find_by(id: @course)
           format.html { redirect_to professors_courses_url, notice: 'You have already created a subscription request for the course: ' + @course.name }
         else
           professor_subscription = ProfessorSubscription.new(professor: current_professor, course: @course)
