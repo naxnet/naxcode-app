@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_22_063826) do
+ActiveRecord::Schema.define(version: 2020_03_23_051158) do
 
   create_table "assignments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
@@ -52,6 +52,18 @@ ActiveRecord::Schema.define(version: 2020_03_22_063826) do
     t.index ["user_id"], name: "index_courses_users_on_user_id"
   end
 
+  create_table "professor_subscriptions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "professor_id", null: false
+    t.bigint "course_id", null: false
+    t.integer "state", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["course_id", "professor_id"], name: "index_professor_subscriptions_on_course_id_and_professor_id", unique: true
+    t.index ["course_id"], name: "index_professor_subscriptions_on_course_id"
+    t.index ["professor_id", "course_id"], name: "index_professor_subscriptions_on_professor_id_and_course_id", unique: true
+    t.index ["professor_id"], name: "index_professor_subscriptions_on_professor_id"
+  end
+
   create_table "professors", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -81,4 +93,6 @@ ActiveRecord::Schema.define(version: 2020_03_22_063826) do
   end
 
   add_foreign_key "assignments", "courses"
+  add_foreign_key "professor_subscriptions", "courses"
+  add_foreign_key "professor_subscriptions", "professors"
 end

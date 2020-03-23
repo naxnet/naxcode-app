@@ -13,6 +13,7 @@ class Course < ApplicationRecord
   acts_as_paranoid
 
   has_many :assignments
+  has_many :professor_subscriptions
 
   has_and_belongs_to_many :professors
   has_and_belongs_to_many :users

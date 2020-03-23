@@ -73,6 +73,9 @@ Rails.application.routes.draw do
 
   namespace :professors do
     resources :courses, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
+      collection do
+        get 'subscribe/:short_id', to: 'courses#subscribe'
+      end
       resources :assignments, only: [:index, :show,  :new, :create, :edit, :update, :destroy]
     end
   end
