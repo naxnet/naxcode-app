@@ -64,7 +64,7 @@ class Professors::AssignmentsController < ApplicationController
     end
     # Use callbacks to share common setup or constraints between actions.
     def set_course
-      @course = Course.find(params[:course_id])
+      @course = current_professor.courses.find(params[:course_id])
     end
 
     def set_assignment

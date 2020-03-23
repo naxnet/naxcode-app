@@ -16,7 +16,7 @@
     <% @courses.each do |course| %>
       <tr>
         <td>
-          <%= link_to [:users, course], class:"btn btn-link" do %>
+          <%= link_to users_course_assignments_path(course), class:"btn btn-link" do %>
             <%= course.name %>
           <% end %>
         </td>

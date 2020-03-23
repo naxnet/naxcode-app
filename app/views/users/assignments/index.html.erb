@@ -1,0 +1,20 @@
+<h1>Assignment of <%= @course.name %></h1>
+
+<nav>
+  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-active" role="tab" aria-controls="nav-home" aria-selected="true">Actived</a>
+    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-deactived" role="tab" aria-controls="nav-profile" aria-selected="false">Deactivated</a>
+    <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-to-activate" role="tab" aria-controls="nav-contact" aria-selected="false">To Activate</a>
+  </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+  <div class="tab-pane fade show active" id="nav-active" role="tabpanel" aria-labelledby="nav-active-tab">
+    <%= render 'table', course: @course, assignments: @active_assignments %>
+  </div>
+  <div class="tab-pane fade" id="nav-deactived" role="tabpanel" aria-labelledby="nav-deactived-tab">
+    <%= render 'table', course: @course, assignments: @deactivated_assignments %>
+  </div>
+  <div class="tab-pane fade" id="nav-to-activate" role="tabpanel" aria-labelledby="nav-to-activate-tab">
+    <%= render 'table', course: @course, assignments: @to_activate_assignments %>
+  </div>
+</div>

@@ -17,7 +17,7 @@ class Assignment < ApplicationRecord
 
   belongs_to :course
 
-  scope :active, -> (time) { where("init_time <= ? AND end_time >= ?", time, time) }
-  scope :to_activate, -> (time) {where("init_time > ? AND end_time > ?", time, time) }
-  scope :deactivated, -> (time) {where("init_time < ? AND end_time < ? ", time, time)}
+  scope :active, -> (time) { where("init_time <= ? AND end_time >= ?", time, time).order(:created_at) }
+  scope :to_activate, -> (time) {where("init_time > ? AND end_time > ?", time, time).order(:created_at) }
+  scope :deactivated, -> (time) {where("init_time < ? AND end_time < ? ", time, time).order(:created_at) }
 end
