@@ -48,6 +48,17 @@
     <%= form.label :private_files %>
     <%= form.file_field :private_files, class: "form-control" %>
   </div>
+  <h3>Assigment files</h3>
+  <div id="tasks">
+    <%= form.fields_for :assignment_files do |assignment_file| %>
+      <ul>
+        <%= render 'assignment_file_fields', f: assignment_file %>
+      </ul>
+    <% end %>
+    <div class="links">
+      <%= link_to_add_association 'add task', form, :assignment_files %>
+    </div>
+  </div>
 
   <div class="actions">
     <%= link_to 'Back', professors_course_assignments_path(course), class: "btn btn-light" %>

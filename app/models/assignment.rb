@@ -20,6 +20,10 @@ class Assignment < ApplicationRecord
 
   belongs_to :course
 
+  has_many :assignment_files
+
+  accepts_nested_attributes_for :assignment_files, reject_if: :all_blank, allow_destroy: true
+
   has_one_attached :statement
   has_one_attached :public_files
   has_one_attached :private_files

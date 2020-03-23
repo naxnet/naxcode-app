@@ -35,6 +35,8 @@ gem 'font_awesome5_rails'
 # Short id
 gem 'hashids'
 
+# nested forms
+gem "cocoon"
 
 #breadcrumbs
 gem "breadcrumbs_on_rails"
