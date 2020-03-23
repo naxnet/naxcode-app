@@ -14,6 +14,10 @@
 class Assignment < ApplicationRecord
   # soft-delete
   acts_as_paranoid
-  
+
   belongs_to :course
+
+  scope :active, -> (time) { where("init_time <= ? AND end_time >= ?", time, time) }
+  scope :to_activate, -> (time) {where("init_time > ? AND end_time > ?", time, time) }
+  scope :deactivated, -> (time) {where("init_time < ? AND end_time < ? ", time, time)}
 end

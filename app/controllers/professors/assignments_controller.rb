@@ -5,7 +5,10 @@ class Professors::AssignmentsController < ApplicationController
   before_action :set_breadcrumbs
 
   def index
-    @assignments = @course.assignments
+    time = Time.now
+    @active_assignments = @course.assignments.active(time)
+    @deactivated_assignments = @course.assignments.deactivated(time)
+    @to_activate_assignments = @course.assignments.to_activate(time)
   end
   def new
     add_breadcrumb "new", new_professors_course_assignment_path(@course)

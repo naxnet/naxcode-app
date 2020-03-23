@@ -1,0 +1,43 @@
+<table  class="table table-striped">
+  <thead>
+    <tr>
+      <th>
+        Name
+      </th>
+      <th>
+        Init Time
+      </th>
+      <th>
+        End Time
+      </th>
+      <th colspan="2">Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% assignments.each do |assignment| %>
+      <tr>
+        <td>
+          <%= link_to [:professors, course, assignment], class:"btn btn-link" do %>
+            <%= assignment.name %>
+          <% end %>
+        </td>
+        <td>
+          <%= assignment.init_time %>
+        </td>
+        <td>
+          <%= assignment.end_time %>
+        </td>
+        <td>
+          <%= link_to edit_professors_course_assignment_path(course, assignment), class: "btn btn-outline-warning" do %>
+            <%= fa_icon('edit', type: :solid, text: ' Edit')  %>
+          <% end %>
+        </td>
+        <td>
+          <%= link_to [:professors, course, assignment], method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-outline-danger" do %>
+            <%= fa_icon('trash', type: :solid, text: ' Delete')  %>
+          <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
