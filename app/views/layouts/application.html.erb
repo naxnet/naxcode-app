@@ -53,6 +53,29 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav mr-auto">
+
+            <% if current_professor != nil %>
+              <li class="nav-item active">
+                <%= link_to professors_courses_path, class: "nav-link" do %>
+                  <% if current_user != nil %>
+                    Profesors |
+                  <% end %>
+                  Courses
+                <% end %>
+              </li>
+            <% end %>
+
+
+            <% if current_user != nil %>
+              <li class="nav-item active">
+                <%= link_to users_courses_path, class: "nav-link" do %>
+                  <% if current_professor != nil %>
+                    Users |
+                  <% end %>
+                  Courses
+                <% end %>
+              </li>
+            <% end %>
             <!-- <li class="nav-item active">
               <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
             </li>
