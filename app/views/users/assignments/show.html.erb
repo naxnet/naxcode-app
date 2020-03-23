@@ -1,17 +1,17 @@
 <h1> @assignment.name </h1>
 
 <h3> Statement </h3>
-
-<object data="https://arxiv.org/pdf/2003.08943.pdf" type="application/pdf" width="100%" height="800px">
+<object data=<%= url_for(@assignment.statement) %> type="application/pdf" width="100%" height="800px">
   <p>It appears you don't have a PDF plugin for this browser.
-   No biggie... you can <a href="https://arxiv.org/pdf/2003.08943.pdf">click here to
+   No biggie... you can <a href=<%= url_for(@assignment.statement) %>>click here to
   download the PDF file.</a></p>
 </object>
 
 <hr>
 
 <h3> Public cases </h3>
-Download: LINK_TO_FILES
+
+<%= link_to "download", rails_blob_path(@assignment.public_files, disposition: "attachment"), class: "btn btn-link" %>
 
 <hr>
 

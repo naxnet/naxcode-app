@@ -75,6 +75,12 @@ class Professors::AssignmentsController < ApplicationController
     def assignment_params
       params.require(:assignment).permit(:name,
                                          :init_time,
-                                         :end_time)
+                                         :end_time,
+                                         :statement,
+                                         :docker_image,
+                                         :revision_grade_percentage,
+                                         :private_grade_percentage,
+                                         :public_files,
+                                         :private_files)
     end
 end
