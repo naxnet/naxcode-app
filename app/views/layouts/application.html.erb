@@ -107,7 +107,8 @@
     <main role="main" class="flex-shrink-0">
       <div class="container">
           <%= render_breadcrumbs(builder: BootstrapBreadcrumbsBuilder) %>
-        <%= yield %>
+          <%= toast_dispatch %>
+          <%= yield %>
       </div>
     </main>
 

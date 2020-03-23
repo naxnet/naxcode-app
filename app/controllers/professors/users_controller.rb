@@ -19,13 +19,13 @@ class Professors::UsersController < ApplicationController
           if @user.courses << @course and @user_subscription.approved!
             format.html { redirect_to professors_course_users_path(@course), notice: 'the subscription was approved' }
           else
-            format.html { redirect_to professors_course_users_path(@course), notice: 'An error occurred, the subscription request could not be approved' }
+            format.html { redirect_to professors_course_users_path(@course), alert: 'An error occurred, the subscription request could not be approved' }
           end
         else
-          format.html { redirect_to professors_course_users_path(@course), notice: 'the subscription was previously approved' }
+          format.html { redirect_to professors_course_users_path(@course), alert: 'the subscription was previously approved' }
         end
       else
-        format.html { redirect_to professors_course_users_path(@course), notice: 'there is no subscription that associates teacher with course' }
+        format.html { redirect_to professors_course_users_path(@course), alert: 'there is no subscription that associates teacher with course' }
       end
     end
   end
@@ -37,13 +37,13 @@ class Professors::UsersController < ApplicationController
           if @user_subscription.rejected!
             format.html { redirect_to professors_course_users_path(@course), notice: 'the subscription was rejected' }
           else
-            format.html { redirect_to professors_course_users_path(@course), notice: 'An error occurred, the subscription request could not be rejected' }
+            format.html { redirect_to professors_course_users_path(@course), alert: 'An error occurred, the subscription request could not be rejected' }
           end
         else
-          format.html { redirect_to professors_course_users_path(@course), notice: 'the subscription was previously rejected or approved' }
+          format.html { redirect_to professors_course_users_path(@course), alert: 'the subscription was previously rejected or approved' }
         end
       else
-        format.html { redirect_to professors_course_users_path(@course), notice: 'there is no subscription that associates teacher with course' }
+        format.html { redirect_to professors_course_users_path(@course), alert: 'there is no subscription that associates teacher with course' }
       end
     end
   end
@@ -54,10 +54,10 @@ class Professors::UsersController < ApplicationController
         if @user.courses.delete(@course) and @user_subscription.rejected!
           format.html { redirect_to professors_course_users_path(@course), notice: 'the teacher was unsubscribed from the course' }
         else
-          format.html { redirect_to professors_course_users_path(@course), notice: 'An error occurred, the subscription request' }
+          format.html { redirect_to professors_course_users_path(@course), alert: 'An error occurred, the subscription request' }
         end
       else
-        format.html { redirect_to professors_course_users_path(@course), notice: 'there is no subscription that associates teacher with course' }
+        format.html { redirect_to professors_course_users_path(@course), alert: 'there is no subscription that associates teacher with course' }
       end
     end
   end

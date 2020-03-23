@@ -26,17 +26,17 @@ class Professors::CoursesController < ApplicationController
     respond_to do |format|
       if @course
         if ProfessorSubscription.find_by(professor: current_professor, course: @course) or current_professor.courses.find_by(id: @course)
-          format.html { redirect_to professors_courses_url, notice: 'You have already created a subscription request for the course: ' + @course.name }
+          format.html { redirect_to professors_courses_url, alert: 'You have already created a subscription request for the course: ' + @course.name }
         else
           professor_subscription = ProfessorSubscription.new(professor: current_professor, course: @course)
           if professor_subscription.save
             format.html { redirect_to professors_courses_url, notice: @course.name + ' course registration awaiting approval.' }
           else
-            format.html { redirect_to professors_courses_url, notice: 'An error occurred, the subscription request could not be created' }
+            format.html { redirect_to professors_courses_url, alert: 'An error occurred, the subscription request could not be created' }
           end
         end
       else
-        format.html { redirect_to professors_courses_url, notice: 'course not found.' }
+        format.html { redirect_to professors_courses_url, alert: 'course not found.' }
       end
     end
   end

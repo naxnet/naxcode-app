@@ -18,17 +18,17 @@ class Users::CoursesController < ApplicationController
     respond_to do |format|
       if @course
         if UserSubscription.find_by(user: current_user, course: @course) or current_user.courses.find_by(id: @course)
-          format.html { redirect_to users_courses_url, notice: 'You have already created a subscription request for the course: ' + @course.name }
+          format.html { redirect_to users_courses_url, alert: 'You have already created a subscription request for the course: ' + @course.name }
         else
           user_subscription = UserSubscription.new(user: current_user, course: @course)
           if user_subscription.save
             format.html { redirect_to users_courses_url, notice: @course.name + ' course registration awaiting approval.' }
           else
-            format.html { redirect_to users_courses_url, notice: 'An error occurred, the subscription request could not be created' }
+            format.html { redirect_to users_courses_url, alert: 'An error occurred, the subscription request could not be created' }
           end
         end
       else
-        format.html { redirect_to users_courses_url, notice: 'course not found.' }
+        format.html { redirect_to users_courses_url, alert: 'course not found.' }
       end
     end
   end
