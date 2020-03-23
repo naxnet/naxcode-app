@@ -76,6 +76,12 @@ Rails.application.routes.draw do
       collection do
         get 'subscribe/:short_id', to: 'courses#subscribe'
       end
+      resources :professors, only: [:index, :destroy] do
+        member do
+          get :approve
+          get :reject
+        end
+      end
       resources :assignments, only: [:index, :show,  :new, :create, :edit, :update, :destroy]
     end
   end
