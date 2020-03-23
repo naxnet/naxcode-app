@@ -2,17 +2,23 @@ class Professors::CoursesController < ApplicationController
   before_action :authenticate_professor!
   before_action :set_course, only: [:show, :edit, :update, :destroy]
 
+  add_breadcrumb "courses", :professors_courses_path
+
   def index
     @courses = current_professor.courses
   end
   def new
+    add_breadcrumb "new", new_professors_course_path
+
     @course = Course.new
   end
 
   def show
+    add_breadcrumb @course.name, professors_course_path(@course)
   end
 
   def edit
+    add_breadcrumb "edit", edit_professors_course_path
   end
 
   def create

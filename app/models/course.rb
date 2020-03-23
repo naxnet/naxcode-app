@@ -16,4 +16,18 @@ class Course < ApplicationRecord
 
   has_and_belongs_to_many :professors
   has_and_belongs_to_many :users
+
+  before_create :add_short_id
+
+
+  private
+    def add_short_id
+      hashids = Hashids.new("PASSWORD")
+      hash = hashids.encode(Time.now())
+
+      while Course.where(short_id: hash).count() != 0
+        hash = hashids.encode(Time.now)
+      end
+      self.short_id = hash
+    end
 end

@@ -28,8 +28,16 @@ gem 'jbuilder', '~> 2.7'
 # User authentication
 gem 'devise', '~> 4.7.1'
 
+# bootstrap
 gem 'bootstrap', '~> 4.4.1'
 gem 'font_awesome5_rails'
+
+# Short id
+gem 'hashids'
+
+
+#breadcrumbs
+gem "breadcrumbs_on_rails"
 
 # soft-delete
 gem 'acts_as_paranoid'
