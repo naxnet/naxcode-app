@@ -73,7 +73,7 @@ Rails.application.routes.draw do
 
   namespace :professors do
     resources :courses, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
-      resources :assignments, only: [:index, :new, :create, :edit, :update, :destroy]
+      resources :assignments, only: [:index, :show,  :new, :create, :edit, :update, :destroy]
     end
   end
 end

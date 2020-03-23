@@ -1,0 +1,19 @@
+<p id="notice">
+  <%= notice %>
+</p>
+
+<h1>
+  <%= @course.name %>
+</h1>
+
+<%= link_to professors_course_assignments_path(@course), class:"btn btn-link" do %>
+  <%= fa_icon('chalkboard-teacher', type: :solid, text: ' See Assignment')  %>
+<% end %>
+
+<%= link_to professors_course_assignments_path(@course), class:"btn btn-link" do %>
+  <%= fa_icon('user-graduate', type: :solid, text: ' See students')  %>
+<% end %>
+
+<%= link_to professors_course_assignments_path(@course), class:"btn btn-link" do %>
+  <%= fa_icon('user-secret', type: :solid, text: ' See Teachers')  %>
+<% end %>
