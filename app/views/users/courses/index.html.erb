@@ -1,0 +1,56 @@
+<p id="notice"><%= notice %></p>
+
+<h1>My Courses</h1>
+
+<table  class="table table-striped">
+  <thead>
+    <tr>
+      <th>
+        Name
+      </th>
+      <th>
+        Code
+      </th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @courses.each do |course| %>
+      <tr>
+        <td>
+          <%= link_to [:users, course], class:"btn btn-link" do %>
+            <%= course.name %>
+          <% end %>
+        </td>
+        <td>
+          <button type="button" class="btn btn-link" data-toggle="modal" data-target="#modal-<%= course.short_id %>">
+            <%= course.short_id %>
+          </button>
+
+          <div class="modal fade" id="modal-<%= course.short_id %>" tabindex="-1" role="dialog" aria-labelledby="modal-<%= course.short_id %>Label" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="modal-<%= course.short_id %>Label">Invite another users to participate in this course</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <ul class="">
+                    <li class="">
+                      Students:
+                      <%= ENV.fetch("ENV_URL") + "/users/courses/subscribe/" + course.short_id %>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>

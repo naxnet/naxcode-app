@@ -81,6 +81,24 @@
                 </li>
               </ul>
             <% end %>
+
+            <% if current_user != nil %>
+              <ul class="navbar-nav  my-2 my-sm-0">
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        User: <%= current_user.name %>
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">
+                      Edit profile
+                    </a>
+                    <a class="dropdown-item" href="#">Edit password</a>
+                    <div class="dropdown-divider"></div>
+                    <%= link_to('Logout', destroy_user_session_path, method: :delete, class: "dropdown-item") %>
+                  </div>
+                </li>
+              </ul>
+            <% end %>
         </div>
       </nav>
     </header>

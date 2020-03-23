@@ -1,0 +1,128 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Students in: <%= @course.name %> </h1>
+
+<table  class="table table-striped">
+  <thead>
+    <tr>
+      <th>
+        Name
+      </th>
+      <th>
+        dni
+      </th>
+      <th>
+        email
+      </th>
+      <th colspan="1">Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td>
+          <%= user.name %>
+        </td>
+        <td>
+          <%= user.dni %>
+        </td>
+        <td>
+          <%= user.email %>
+        </td>
+        <td>
+          <%= link_to [:professors, @course,  user], method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-outline-danger" do %>
+            <%= fa_icon('trash', type: :solid, text: ' Delete')  %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>
+
+<h1>Students awaiting for approval </h1>
+<table  class="table table-striped">
+  <thead>
+    <tr>
+      <th>
+        Name
+      </th>
+      <th>
+        dni
+      </th>
+      <th>
+        email
+      </th>
+      <th colspan="2">Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @user_subscriptions_aw.each do |user_subscription| %>
+      <tr>
+        <td>
+          <%= user_subscription.user.name %>
+        </td>
+        <td>
+          <%= user_subscription.user.dni %>
+        </td>
+        <td>
+          <%= user_subscription.user.email %>
+        </td>
+        <td>
+          <%= link_to approve_professors_course_user_path(@course, user_subscription.user), class: "btn btn-outline-success" do %>
+            <%= fa_icon('check', type: :solid, text: ' Approve')  %>
+          <% end %>
+        </td>
+        <td>
+          <%= link_to reject_professors_course_user_path(@course, user_subscription.user), class: "btn btn-outline-danger" do %>
+            <%= fa_icon('times', type: :solid, text: ' Reject')  %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br/>
+
+
+<h1>Students rejected </h1>
+<table  class="table table-striped">
+  <thead>
+    <tr>
+      <th>
+        Name
+      </th>
+      <th>
+        dni
+      </th>
+      <th>
+        email
+      </th>
+      <th colspan="2">Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @user_subscriptions_re.each do |user_subscription| %>
+      <tr>
+        <td>
+          <%= user_subscription.user.name %>
+        </td>
+        <td>
+          <%= user_subscription.user.dni %>
+        </td>
+        <td>
+          <%= user_subscription.user.email %>
+        </td>
+        <td>
+          <%= link_to approve_professors_course_user_path(@course, user_subscription.user), class: "btn btn-outline-success" do %>
+            <%= fa_icon('check', type: :solid, text: ' Approve')  %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

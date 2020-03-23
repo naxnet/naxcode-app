@@ -67,9 +67,23 @@
 #                  rails_direct_uploads POST   /rails/active_storage/direct_uploads(.:format)                                           active_storage/direct_uploads#create
 
 Rails.application.routes.draw do
+  namespace :professors do
+    get 'users/index'
+  end
+  namespace :users do
+    get 'courses/index'
+  end
   devise_for :professors
   devise_for :users
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+
+  namespace :users do
+    resources :courses, only: [:index, :show, :destroy] do
+      collection do
+        get 'subscribe/:short_id', to: 'courses#subscribe'
+      end
+    end
+  end
 
   namespace :professors do
     resources :courses, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
@@ -77,6 +91,12 @@ Rails.application.routes.draw do
         get 'subscribe/:short_id', to: 'courses#subscribe'
       end
       resources :professors, only: [:index, :destroy] do
+        member do
+          get :approve
+          get :reject
+        end
+      end
+      resources :users, only: [:index, :destroy] do
         member do
           get :approve
           get :reject

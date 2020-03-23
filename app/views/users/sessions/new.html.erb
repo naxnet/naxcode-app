@@ -1,26 +1,19 @@
-<h2>Log in asd</h2>
+<%= form_for(resource, as: resource_name, url: session_path(resource_name), html: {class: "form-signin"}) do |f| %>
+  <img class="mb-4" src="/naxnet.png" alt="" width="72" height="72">
+  <h1 class="h3 mb-3 font-weight-normal">Students login</h1>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+  <label for="inputEmail" class="sr-only">Email address</label>
+  <%= f.email_field :email, autofocus: true, autocomplete: "email", id: "inputEmail", class: "form-control",  placeholder: "Email address", required: true %>
 
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
 
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
-    </div>
-  <% end %>
+  <label for="inputPassword" class="sr-only">Password</label>
+  <%= f.password_field :password, autocomplete: "current-password", id: "inputPassword", class: "form-control", placeholder: "Password", required: true %>
 
-  <div class="actions">
-    <%= f.submit "Log in" %>
-  </div>
+  <!-- <div class="checkbox mb-3">
+    <label>
+      <input type="checkbox" value="remember-me"> Remember me
+    </label>
+  </div> -->
+  <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+
 <% end %>
-
-<%= render "users/shared/links" %>
