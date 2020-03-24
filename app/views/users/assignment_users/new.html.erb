@@ -1,0 +1,28 @@
+<h1>New submition for:  <%= @assignment.name %></h1>
+
+<%= form_with(model: [:users, @course, @assignment, @assignment_user], local: true) do |form| %>
+  <% if @assignment_user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@assignment_user.errors.count, "error") %> prohibited this assignment_user from being saved:</h2>
+
+      <ul>
+        <% @assignment_user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <% i = 0 %>
+  <%= form.fields_for :assignment_user_files do |fform| %>
+    <div class="form-group">
+      <%= @assignment.assignment_files[i].name %>
+      <%= fform.file_field :file, class: "form-control" %>
+      <%= fform.hidden_field :assignment_file_id, value: @assignment.assignment_files[i].id %>
+    </div>
+    <% i += 1 %>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit class: "btn btn-primary" %>
+  </div>
+<% end %>

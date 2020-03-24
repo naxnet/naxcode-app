@@ -1,9 +1,11 @@
-<h1> @assignment.name </h1>
+<h1> <%= @assignment.name %> </h1>
 
 <h3> Statement </h3>
-<object data=<%= url_for(@assignment.statement) %> type="application/pdf" width="100%" height="800px">
+
+
+<object data=<%= @assignment.statement.service_url %> type="application/pdf" width="100%" height="800px">
   <p>It appears you don't have a PDF plugin for this browser.
-   No biggie... you can <a href=<%= url_for(@assignment.statement) %>>click here to
+   No biggie... you can <a href="<%= @assignment.statement.service_url %>"">click here to
   download the PDF file.</a></p>
 </object>
 
@@ -11,12 +13,17 @@
 
 <h3> Public cases </h3>
 
-<%= link_to "download", rails_blob_path(@assignment.public_files, disposition: "attachment"), class: "btn btn-link" %>
+<%= link_to "download", @assignment.public_files.service_url, class: "btn btn-link" %>
 
 <hr>
 
 
 <h3>Submit History</h3>
+
+<%= link_to new_users_course_assignment_assignment_user_path(@course, @assignment), class:"btn btn-success " do %>
+  <%= fa_icon('plus-circle', type: :solid, text: ' new')  %>
+<% end %>
+
 
 <table  class="table table-striped">
   <thead>
@@ -25,39 +32,27 @@
         Fecha
       </th>
       <th>
-        public cases
+        Public cases
       </th>
       <th>
-        private cases
+        Private cases
+      </th>
+      <th>
+        Status
       </th>
       <th colspan="1">Actions</th>
     </tr>
   </thead>
 
   <tbody>
-    <tr>
-        <td><%= Time.now %></td>
-        <td>10/10</td>
-        <td>8/10</td>
-        <td>VER</td>
-    </tr>
-    <tr>
-        <td><%= Time.now %></td>
-        <td>10/10</td>
-        <td>8/10</td>
-        <td>VER</td>
-    </tr>
-    <tr>
-        <td><%= Time.now %></td>
-        <td>10/10</td>
-        <td>8/10</td>
-        <td>VER</td>
-    </tr>
-    <tr>
-        <td><%= Time.now %></td>
-        <td>10/10</td>
-        <td>8/10</td>
-        <td>VER</td>
-    </tr>
+    <% @assignment_users.each do |assignment_user| %>
+        <tr>
+            <td><%= assignment_user.created_at %></td>
+            <td><%= assignment_user.public_score %></td>
+            <td><%= assignment_user.private_score %></td>
+            <td><%= assignment_user.status %></td>
+            <td>VER</td>
+        </tr>
+    <% end %>
   </tbody>
 </table>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_23_213251) do
+ActiveRecord::Schema.define(version: 2020_03_23_230927) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -40,6 +40,31 @@ ActiveRecord::Schema.define(version: 2020_03_23_213251) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["assignment_id"], name: "index_assignment_files_on_assignment_id"
+  end
+
+  create_table "assignment_user_files", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "assignment_user_id", null: false
+    t.bigint "assignment_file_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["assignment_file_id", "assignment_user_id"], name: "auf_af_id_au_id_index", unique: true
+    t.index ["assignment_file_id"], name: "index_assignment_user_files_on_assignment_file_id"
+    t.index ["assignment_user_id", "assignment_file_id"], name: "auf_au_id_af_id_index", unique: true
+    t.index ["assignment_user_id"], name: "index_assignment_user_files_on_assignment_user_id"
+  end
+
+  create_table "assignment_users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "assignment_id", null: false
+    t.bigint "user_id", null: false
+    t.integer "public_score", default: 0
+    t.integer "private_score", default: 0
+    t.integer "status", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["assignment_id", "user_id"], name: "index_assignment_users_on_assignment_id_and_user_id"
+    t.index ["assignment_id"], name: "index_assignment_users_on_assignment_id"
+    t.index ["user_id", "assignment_id"], name: "index_assignment_users_on_user_id_and_assignment_id"
+    t.index ["user_id"], name: "index_assignment_users_on_user_id"
   end
 
   create_table "assignments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -139,6 +164,10 @@ ActiveRecord::Schema.define(version: 2020_03_23_213251) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "assignment_files", "assignments"
+  add_foreign_key "assignment_user_files", "assignment_files"
+  add_foreign_key "assignment_user_files", "assignment_users"
+  add_foreign_key "assignment_users", "assignments"
+  add_foreign_key "assignment_users", "users"
   add_foreign_key "assignments", "courses"
   add_foreign_key "professor_subscriptions", "courses"
   add_foreign_key "professor_subscriptions", "professors"

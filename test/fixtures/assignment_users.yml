@@ -1,21 +1,20 @@
 # == Schema Information
 #
-# Table name: assignment_files
+# Table name: assignment_users
 #
 #  id            :bigint           not null, primary key
-#  name          :string(255)
-#  description   :string(255)
 #  assignment_id :bigint           not null
+#  user_id       :bigint           not null
+#  public_score  :integer          default("0")
+#  private_score :integer          default("0")
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #
 
 one:
-  name: MyString
-  description: MyString
-  assignment: one
+  assigment: one
+  user: one
 
 two:
-  name: MyString
-  description: MyString
-  assignment: two
+  assigment: two
+  user: two

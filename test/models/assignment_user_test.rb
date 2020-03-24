@@ -1,17 +1,18 @@
 # == Schema Information
 #
-# Table name: assignment_files
+# Table name: assignment_users
 #
 #  id            :bigint           not null, primary key
-#  name          :string(255)
-#  description   :string(255)
 #  assignment_id :bigint           not null
+#  user_id       :bigint           not null
+#  public_score  :integer          default("0")
+#  private_score :integer          default("0")
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #
 require 'test_helper'
 
-class AssignmentFileTest < ActiveSupport::TestCase
+class AssignmentUserTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

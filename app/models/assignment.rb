@@ -21,6 +21,7 @@ class Assignment < ApplicationRecord
   belongs_to :course
 
   has_many :assignment_files
+  has_many :assignment_users
 
   accepts_nested_attributes_for :assignment_files, reject_if: :all_blank, allow_destroy: true
 
