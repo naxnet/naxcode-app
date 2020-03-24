@@ -38,6 +38,9 @@ gem 'hashids'
 # nested forms
 gem "cocoon"
 
+# for active jobs
+gem 'sidekiq'
+
 #breadcrumbs
 gem "breadcrumbs_on_rails"
 

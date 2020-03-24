@@ -27,6 +27,7 @@ class Users::AssignmentUsersController < ApplicationController
           i += 1
         end
 
+        ReviewAssignmentJob.perform_later(assignment_user)
         format.html { redirect_to users_course_assignment_path(@course, @assignment), notice: 'assignment_user was successfully created.' }
       else
         format.html { render :new }
