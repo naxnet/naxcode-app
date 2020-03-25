@@ -48,6 +48,10 @@
     <%= form.label :private_files %>
     <%= form.file_field :private_files, class: "form-control" %>
   </div>
+  <div class="form-group">
+    <%= form.label :makefile %>
+    <%= form.file_field :makefile, class: "form-control" %>
+  </div>
   <h3>Assigment files</h3>
   <div id="tasks">
     <%= form.fields_for :assignment_files do |assignment_file| %>

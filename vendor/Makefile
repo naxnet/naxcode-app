@@ -1,12 +1,54 @@
-DOCKER_IMAGE=""
 DOCKER_COMMAND=docker
+MKDIR_COMMAND=mkdir  -p
+WGET_COMMAND=wget
+UNZIP_COMMAND=unzip
+CD_COMMAND=cd
+RM_COMMAND=rm
+BASH_COMMAND=/bin/bash
+PWD=$(shell pwd)
+
+
+
+SRC_FOLDER=./src
+DOCKER_SRC_FOLDER=/output
+
+DOWNLOADER_FILENAME=download_file.sh
+PUBLIC_ZIP_FILENAME=public.zip
+PRIVATE_ZIP_FILENAME=private.zip
+MAKEFILE_FILENAME=Makefile
+
+DOWNLOADER_FILE_URL=https://gist.githubusercontent.com/so77id/fa4c5360d1efc9645d80a7ca8882e423/raw/6aeb005982867bf00068fcefdee713dcecf438aa/download_files.sh
+
+DOCKER_IMAGE=""
 DOCKER_CONTAINER_NAME=""
 
 
-DOCKER_RUN_COMMAND=$(DOCKER_COMMAND) run -it --rm --name=$(DOCKER_CONTAINER_NAME) $(DOCKER_IMAGE)
+PUBLIC_ZIP_URL=
+PRIVATE_ZIP_URL=
+MAKEFILE_URL=
+CODE_URLS=
+CODE_NAMES=
 
 
 
+DOCKER_RUN_COMMAND=$(DOCKER_COMMAND) run -it --rm -v $(PWD)/vendor:/$(SRC_FOLDER) --name=$(DOCKER_CONTAINER_NAME) $(DOCKER_IMAGE)
+
+setup s:
+	@$(MKDIR_COMMAND) $(DOCKER_SRC_FOLDER)
+	@$(WGET_COMMAND) -O '$(DOCKER_SRC_FOLDER)/$(PUBLIC_ZIP_FILENAME)' '$(PUBLIC_ZIP_URL)'
+	@$(UNZIP_COMMAND) '$(DOCKER_SRC_FOLDER)/$(PUBLIC_ZIP_FILENAME)' -d $(DOCKER_SRC_FOLDER)/public
+	@$(RM_COMMAND) '$(DOCKER_SRC_FOLDER)/$(PUBLIC_ZIP_FILENAME)'
+	#
+	@$(WGET_COMMAND) -O '$(DOCKER_SRC_FOLDER)/$(PRIVATE_ZIP_FILENAME)' '$(PRIVATE_ZIP_URL)'
+	@$(UNZIP_COMMAND) '$(DOCKER_SRC_FOLDER)/$(PRIVATE_ZIP_FILENAME)' -d $(DOCKER_SRC_FOLDER)/private
+	@$(RM_COMMAND) '$(DOCKER_SRC_FOLDER)/$(PRIVATE_ZIP_FILENAME)'
+	#
+	@$(WGET_COMMAND) -O '$(DOCKER_SRC_FOLDER)/$(MAKEFILE_FILENAME)' '$(MAKEFILE_URL)'
+	#
+	@$(WGET_COMMAND) -O '$(DOCKER_SRC_FOLDER)/$(DOWNLOADER_FILENAME)' '$(DOWNLOADER_FILE_URL)'
+	@$(BASH_COMMAND) $(DOCKER_SRC_FOLDER)/$(DOWNLOADER_FILENAME) '"$(CODE_URLS)"' '"$(CODE_NAMES)"' $(DOCKER_SRC_FOLDER)
+
+	ls $(DOCKER_SRC_FOLDER)
 run r:
-	@$(DOCKER_RUN_COMMAND)  bash -c "echo '------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------'"; \
+	@$(DOCKER_RUN_COMMAND)  bash -c "apt-get update && apt-get install -y wget make unzip && cd $(SRC_FOLDER) && make setup CODE_NAMES='$(CODE_NAMES)' PUBLIC_ZIP_URL='$(PUBLIC_ZIP_URL)' PRIVATE_ZIP_URL='$(PRIVATE_ZIP_URL)' MAKEFILE_URL='$(MAKEFILE_URL)' CODE_URLS='$(CODE_URLS)'";
 	status=$$?

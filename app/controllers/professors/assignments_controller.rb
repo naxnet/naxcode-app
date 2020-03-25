@@ -82,6 +82,7 @@ class Professors::AssignmentsController < ApplicationController
                                          :private_grade_percentage,
                                          :public_files,
                                          :private_files,
+                                         :makefile,
                                          assignment_files_attributes: [
                                             :id,
                                             :name,

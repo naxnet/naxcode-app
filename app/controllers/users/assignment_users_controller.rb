@@ -1,9 +1,10 @@
 class Users::AssignmentUsersController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:enqueue]
   before_action :set_course
   before_action :set_assignment
   before_action :set_breadcrumbs
   before_action :set_assignment_user, only: [:show]
+  protect_from_forgery with: :null_session
 
 
   def new
@@ -27,12 +28,16 @@ class Users::AssignmentUsersController < ApplicationController
           i += 1
         end
 
-        ReviewAssignmentJob.perform_later(assignment_user)
+        assignment_user.review()
+
         format.html { redirect_to users_course_assignment_path(@course, @assignment), notice: 'assignment_user was successfully created.' }
       else
         format.html { render :new }
       end
     end
+  end
+
+  def enqueue
   end
 
   def show
