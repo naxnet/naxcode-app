@@ -99,7 +99,13 @@ Rails.application.routes.draw do
         get 'subscribe/:short_id', to: 'courses#subscribe'
       end
       resources :assignments, only: [:index, :show] do
-        resources :assignment_users, only: [:new, :create, :show]
+        resources :assignment_users, only: [:new, :create, :show] do
+          member do
+            post :result
+            post :result_zip
+            post :compilation_error
+          end
+        end
       end
     end
   end

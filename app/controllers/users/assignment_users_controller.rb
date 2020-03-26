@@ -1,9 +1,11 @@
 class Users::AssignmentUsersController < ApplicationController
-  before_action :authenticate_user!, except: [:enqueue]
-  before_action :set_course
+  before_action :authenticate_user!, except: [:result, :result_zip, :compilation_error]
+  before_action :set_course, except: [:result, :result_zip, :compilation_error]
+  before_action :set_course_for_result, only: [:result, :result_zip, :compilation_error]
   before_action :set_assignment
   before_action :set_breadcrumbs
   before_action :set_assignment_user, only: [:show]
+  before_action :set_assignment_user_for_result, only: [:result, :result_zip, :compilation_error]
   protect_from_forgery with: :null_session
 
 
@@ -37,10 +39,38 @@ class Users::AssignmentUsersController < ApplicationController
     end
   end
 
-  def enqueue
+  def result
+    private_results = params[:private]
+    public_results = params[:public]
+
+   private_results[:experiments].each do |exp|
+      @assignment_user.assignment_user_private_results.new(name: exp[:name],
+                                                           name: exp[:diff],
+                                                           name: exp[:status])
+    end
+
+    public_results[:experiments].each do |exp|
+       @assignment_user.assignment_user_public_results.new(name: exp[:name],
+                                                           name: exp[:diff],
+                                                           name: exp[:status])
+    end
+
+    @assignment_user.update(compilation_error: :passed, status: :processed, public_score: public_results[:n_passed_exp],public_n_exps: public_results[:n_exp], private_score: private_results[:n_passed_exp], private_n_exps: private_results[:n_exp])
+    render json: {}, status: :ok
+  end
+
+  def result_zip
+    @assignment_user.update(private_zip_result: params[:private_zip], public_zip_result: params[:public_zip])
+    render json: {}, status: :ok
+  end
+
+  def compilation_error
+      @assignment_user.update(compilation_file: params[:compilation_file], compilation_error: :failed)
+      render json: {}, status: :ok
   end
 
   def show
+    add_breadcrumb "submit", users_course_assignment_assignment_user_path(@course, @assignment)
   end
 
   private
@@ -60,7 +90,7 @@ class Users::AssignmentUsersController < ApplicationController
     end
 
     def set_assignment_user
-      @assignment = current_user.assignment_users.find(params[:id])
+      @assignment_user = current_user.assignment_users.find(params[:id])
     end
 
     def assignment_user_params
@@ -69,4 +99,19 @@ class Users::AssignmentUsersController < ApplicationController
                                                 :assignment_file_id
                                               ])
     end
+
+
+
+
+    def set_course_for_result
+      @course = Course.find(params[:course_id])
+    end
+
+    def set_assignment_user_for_result
+      @assignment_user = AssignmentUser.find(params[:id])
+    end
+
+    # def results_params
+    #   params.permit(:public, :private, :compilation)
+    # end
 end

@@ -32,6 +32,9 @@
         Fecha
       </th>
       <th>
+        Compilation
+      </th>
+      <th>
         Public cases
       </th>
       <th>
@@ -48,10 +51,15 @@
     <% @assignment_users.each do |assignment_user| %>
         <tr>
             <td><%= assignment_user.created_at %></td>
-            <td><%= assignment_user.public_score %></td>
-            <td><%= assignment_user.private_score %></td>
+            <td><%= assignment_user.compilation_error %></td>
+            <td><%= assignment_user.public_score %> / <%= assignment_user.public_n_exps %></td>
+            <td><%= assignment_user.private_score %> / <%= assignment_user.private_n_exps %></td>
             <td><%= assignment_user.status %></td>
-            <td>VER</td>
+            <td>
+              <%= link_to [:users, @course, @assignment, assignment_user], class: "btn btn-outline-warning" do %>
+                <%= fa_icon('eye', type: :solid, text: ' Show')  %>
+              <% end %>
+            </td>
         </tr>
     <% end %>
   </tbody>

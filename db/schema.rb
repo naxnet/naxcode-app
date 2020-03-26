@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_23_230927) do
+ActiveRecord::Schema.define(version: 2020_03_26_051704) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -53,6 +53,26 @@ ActiveRecord::Schema.define(version: 2020_03_23_230927) do
     t.index ["assignment_user_id"], name: "index_assignment_user_files_on_assignment_user_id"
   end
 
+  create_table "assignment_user_private_results", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name"
+    t.string "diff"
+    t.boolean "status"
+    t.bigint "assignment_user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["assignment_user_id"], name: "index_assignment_user_private_results_on_assignment_user_id"
+  end
+
+  create_table "assignment_user_public_results", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name"
+    t.string "diff"
+    t.boolean "status", default: false
+    t.bigint "assignment_user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["assignment_user_id"], name: "index_assignment_user_public_results_on_assignment_user_id"
+  end
+
   create_table "assignment_users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "assignment_id", null: false
     t.bigint "user_id", null: false
@@ -61,6 +81,9 @@ ActiveRecord::Schema.define(version: 2020_03_23_230927) do
     t.integer "status", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "public_n_exps", default: 0
+    t.integer "private_n_exps", default: 0
+    t.integer "compilation_error", default: 0
     t.index ["assignment_id", "user_id"], name: "index_assignment_users_on_assignment_id_and_user_id"
     t.index ["assignment_id"], name: "index_assignment_users_on_assignment_id"
     t.index ["user_id", "assignment_id"], name: "index_assignment_users_on_user_id_and_assignment_id"
@@ -166,6 +189,8 @@ ActiveRecord::Schema.define(version: 2020_03_23_230927) do
   add_foreign_key "assignment_files", "assignments"
   add_foreign_key "assignment_user_files", "assignment_files"
   add_foreign_key "assignment_user_files", "assignment_users"
+  add_foreign_key "assignment_user_private_results", "assignment_users"
+  add_foreign_key "assignment_user_public_results", "assignment_users"
   add_foreign_key "assignment_users", "assignments"
   add_foreign_key "assignment_users", "users"
   add_foreign_key "assignments", "courses"

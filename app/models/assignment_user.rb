@@ -15,14 +15,23 @@ class AssignmentUser < ApplicationRecord
   belongs_to :user
 
   has_many :assignment_user_files
+  has_many :assignment_user_private_results
+  has_many :assignment_user_public_results
 
   enum status: [:processing, :processed, :error]
+  enum compilation_error: [:not_compiled, :passed, :failed]
 
+  has_one_attached :public_zip_result
+  has_one_attached :private_zip_result
+  has_one_attached :compilation_file
 
   accepts_nested_attributes_for :assignment_user_files, reject_if: :all_blank, allow_destroy: true
 
 
   def review
+    host = "http://190.47.216.31:3000"
+    course_id = self.assignment.course.id
+    assignment_id = self.assignment.id
     docker_image = self.assignment.docker_image
     private_url = self.assignment.private_files.service_url
     public_url = self.assignment.private_files.service_url
@@ -30,6 +39,6 @@ class AssignmentUser < ApplicationRecord
     code_name = self.assignment.assignment_files.map{ |a_file| a_file.name}
     makefile_url = self.assignment.makefile.service_url
 
-    ReviewAssignmentJob.perform_later(self, docker_image, private_url, public_url, code_urls, code_name, makefile_url)
+    ReviewAssignmentJob.perform_later(self, course_id, assignment_id, host, docker_image, private_url, public_url, code_urls, code_name, makefile_url)
   end
 end
