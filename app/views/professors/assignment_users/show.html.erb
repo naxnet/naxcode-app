@@ -23,9 +23,19 @@
   </tr>
 </table>
 
-<%= link_to "download public outputs", @assignment_user.public_zip_result.service_url, class: "btn btn-link" %>
+<h4>Codes</h4>
+<ul>
+  <% @assignment_user.assignment_user_files.each do |assignment_user_file| %>
+    <li>
+      <%= link_to assignment_user_file.assignment_file.name, assignment_user_file.file.service_url, class: "btn btn-link" %>
+    </li>
+  <% end %>
+</ul>
+
+
 
 <h3>Public results</h3>
+<%= link_to "download public outputs", @assignment_user.public_zip_result.service_url, class: "btn btn-link" %>
 
 <% @assignment_user.assignment_user_public_results.each do |public_result| %>
   <div class="accordion" id="accordionPublic">
@@ -63,9 +73,9 @@
   </div>
 <% end %>
 
-<%= link_to "download private outputs", @assignment_user.private_zip_result.service_url, class: "btn btn-link" %>
-<h3>Private results</h3>
 
+<h3>Private results</h3>
+<%= link_to "download private outputs", @assignment_user.private_zip_result.service_url, class: "btn btn-link" %>
 <% @assignment_user.assignment_user_private_results.each do |private_result| %>
   <div class="accordion" id="accordionExample">
     <div class="card">
