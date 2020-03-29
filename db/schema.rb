@@ -55,8 +55,8 @@ ActiveRecord::Schema.define(version: 2020_03_26_051704) do
 
   create_table "assignment_user_private_results", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
-    t.string "diff"
-    t.boolean "status"
+    t.text "diff"
+    t.boolean "status", default: false
     t.bigint "assignment_user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -65,7 +65,7 @@ ActiveRecord::Schema.define(version: 2020_03_26_051704) do
 
   create_table "assignment_user_public_results", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
-    t.string "diff"
+    t.text "diff"
     t.boolean "status", default: false
     t.bigint "assignment_user_id", null: false
     t.datetime "created_at", precision: 6, null: false

@@ -1,2 +1,70 @@
-<h1>Users::AssignmentUsers#show</h1>
-<p>Find me in app/views/users/assignment_users/show.html.erb</p>
+<h1><%= @assignment_user.assignment.name %> </h1>
+
+<table class="table table-striped">
+  <tr>
+    <th>Date</th>
+    <td><%= @assignment_user.created_at %></td>
+  </tr>
+  <tr>
+    <th>Compilation status</th>
+    <td><%= @assignment_user.compilation_error %></td>
+  </tr>
+  <tr>
+    <th>Queue Status</th>
+    <td><%= @assignment_user.status %></td>
+  </tr>
+  <tr>
+    <th>Public Score</th>
+    <td><%= @assignment_user.public_score %>/<%= @assignment_user.public_n_exps %></td>
+  </tr>
+  <tr>
+    <th>Private Score</th>
+    <td><%= @assignment_user.private_score %>/<%= @assignment_user.private_n_exps %></td>
+  </tr>
+</table>
+
+<%= link_to "download_outputs", @assignment_user.public_zip_result.service_url, class: "btn btn-link" %>
+
+<% @assignment_user.assignment_user_public_results.each do |public_result| %>
+  <div class="accordion" id="accordionExample">
+    <div class="card">
+      <div class="card-header" id="heading-<%= public_result.id %>">
+        <h2 class="mb-0">
+          <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse-<%= public_result.id %>" aria-expanded="true" aria-controls="collapse-<%= public_result.id %>">
+            <%= public_result.name %>.in
+          </button>
+        </h2>
+      </div>
+
+      <% if !public_result.status %>
+        <div id="collapse-<%= public_result.id %>" class="collapse" aria-labelledby="heading-<%= public_result.id %>" data-parent="#accordionExample">
+          <div class="card-body">
+            <div id="myDiffElement-<%= public_result.id %>"> </div>
+            <script type="text/javascript">
+              document.addEventListener('DOMContentLoaded', () => {
+                  const diffString_ = '<%= public_result.diff.gsub("\n", '<o.O>') %>';
+                  const diffString = diffString_.split('&lt;o.O&gt;').join('\n');
+                  const targetElement = document.getElementById('myDiffElement-<%= public_result.id %>');
+                  const configuration = { outputFormat: 'side-by-side',inputFormat: 'json', drawFileList: false, matching: 'lines', highlight: true };
+                  const diff2htmlUi = new Diff2HtmlUI(targetElement, diffString, configuration);
+                  diff2htmlUi.draw();
+                  diff2htmlUi.highlightCode();
+                });
+            </script>
+
+
+          </div>
+        </div>
+      <% end %>
+
+    </div>
+  </div>
+<% end %>
+
+
+<!-- Stylesheet -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/github.min.css" />
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/diff2html/bundles/css/diff2html.min.css" />
+
+<!-- Javascripts -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/diff2html/bundles/js/diff2html-ui.min.js"></script>

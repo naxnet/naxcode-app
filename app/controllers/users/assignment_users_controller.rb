@@ -42,17 +42,17 @@ class Users::AssignmentUsersController < ApplicationController
   def result
     private_results = params[:private]
     public_results = params[:public]
-
-   private_results[:experiments].each do |exp|
+    
+    private_results[:experiments].each do |exp|
       @assignment_user.assignment_user_private_results.new(name: exp[:name],
-                                                           name: exp[:diff],
-                                                           name: exp[:status])
+                                                           diff: exp[:diff],
+                                                           status: exp[:status])
     end
 
     public_results[:experiments].each do |exp|
        @assignment_user.assignment_user_public_results.new(name: exp[:name],
-                                                           name: exp[:diff],
-                                                           name: exp[:status])
+                                                           diff: exp[:diff],
+                                                           status: exp[:status])
     end
 
     @assignment_user.update(compilation_error: :passed, status: :processed, public_score: public_results[:n_passed_exp],public_n_exps: public_results[:n_exp], private_score: private_results[:n_passed_exp], private_n_exps: private_results[:n_exp])
@@ -65,7 +65,7 @@ class Users::AssignmentUsersController < ApplicationController
   end
 
   def compilation_error
-      @assignment_user.update(compilation_file: params[:compilation_file], compilation_error: :failed)
+      @assignment_user.update(compilation_file: params[:compilation_file], compilation_error: :failed, status: :error)
       render json: {}, status: :ok
   end
 
