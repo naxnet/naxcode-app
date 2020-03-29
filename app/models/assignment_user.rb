@@ -41,7 +41,7 @@ class AssignmentUser < ApplicationRecord
     assignment_id = self.assignment.id
     docker_image = self.assignment.docker_image
     private_url = self.assignment.private_files.service_url
-    public_url = self.assignment.private_files.service_url
+    public_url = self.assignment.public_files.service_url
     code_urls = self.assignment_user_files.map { |au_file| au_file.file.service_url }
     code_name = self.assignment.assignment_files.map{ |a_file| a_file.name}
     makefile_url = self.assignment.makefile.service_url
