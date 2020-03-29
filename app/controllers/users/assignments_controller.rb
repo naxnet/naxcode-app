@@ -15,6 +15,7 @@ class Users::AssignmentsController < ApplicationController
   def show
     add_breadcrumb @assignment.name, users_course_assignment_path(@course, @assignment)
     @assignment_users = current_user.assignment_users.where(assignment: @assignment)
+    @assignment_user_result = current_user.assignment_user_results.find_by(assignment: @assignment)
   end
 
   private

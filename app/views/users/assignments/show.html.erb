@@ -16,7 +16,45 @@
 <%= link_to "download", @assignment.public_files.service_url, class: "btn btn-link" %>
 
 <hr>
-
+<% if @assignment_user_result %>
+  <h3>Final Result</h3>
+  <table  class="table table-striped">
+    <thead>
+      <tr>
+        <th>
+          Fecha
+        </th>
+        <th>
+          Compilation
+        </th>
+        <th>
+          Public cases
+        </th>
+        <th>
+          Private cases
+        </th>
+        <th>
+          Status
+        </th>
+        <th colspan="1">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+          <td><%= @assignment_user_result.assignment_user.created_at %></td>
+          <td><%= @assignment_user_result.assignment_user.compilation_error %></td>
+          <td><%= @assignment_user_result.assignment_user.public_score %> / <%= @assignment_user_result.assignment_user.public_n_exps %></td>
+          <td><%= @assignment_user_result.assignment_user.private_score %> / <%= @assignment_user_result.assignment_user.private_n_exps %></td>
+          <td><%= @assignment_user_result.assignment_user.status %></td>
+          <td>
+            <%= link_to [:users, @course, @assignment, @assignment_user_result.assignment_user], class: "btn btn-outline-warning" do %>
+              <%= fa_icon('eye', type: :solid, text: ' Show')  %>
+            <% end %>
+          </td>
+      </tr>
+    </tbody>
+  </table>
+<% end %>
 
 <h3>Submit History</h3>
 
@@ -43,7 +81,7 @@
       <th>
         Status
       </th>
-      <th colspan="1">Actions</th>
+      <th colspan="2">Actions</th>
     </tr>
   </thead>
 
@@ -58,6 +96,11 @@
             <td>
               <%= link_to [:users, @course, @assignment, assignment_user], class: "btn btn-outline-warning" do %>
                 <%= fa_icon('eye', type: :solid, text: ' Show')  %>
+              <% end %>
+            </td>
+            <td>
+              <%= link_to  mark_as_final_users_course_assignment_assignment_user_path(@course, @assignment, assignment_user), class: "btn btn-outline-success" do %>
+                <%= fa_icon('check', type: :solid, text: ' Mark as final')  %>
               <% end %>
             </td>
         </tr>

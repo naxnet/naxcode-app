@@ -104,6 +104,7 @@ Rails.application.routes.draw do
       resources :assignments, only: [:index, :show] do
         resources :assignment_users, only: [:new, :create, :show] do
           member do
+            get :mark_as_final
             post :result
             post :result_zip
             post :compilation_error

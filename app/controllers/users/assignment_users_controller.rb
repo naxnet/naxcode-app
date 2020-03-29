@@ -4,7 +4,7 @@ class Users::AssignmentUsersController < ApplicationController
   before_action :set_course_for_result, only: [:result, :result_zip, :compilation_error]
   before_action :set_assignment
   before_action :set_breadcrumbs
-  before_action :set_assignment_user, only: [:show]
+  before_action :set_assignment_user, only: [:show, :mark_as_final]
   before_action :set_assignment_user_for_result, only: [:result, :result_zip, :compilation_error]
   protect_from_forgery with: :null_session
 
@@ -39,10 +39,17 @@ class Users::AssignmentUsersController < ApplicationController
     end
   end
 
+  def mark_as_final
+    @assignment_user.assign_as_result
+    respond_to do |format|
+      format.html { redirect_to users_course_assignment_path(@course, @assignment), notice: 'assignment_user was successfully assigned as a final result.' }
+    end
+  end
+
   def result
     private_results = params[:private]
     public_results = params[:public]
-    
+
     private_results[:experiments].each do |exp|
       @assignment_user.assignment_user_private_results.new(name: exp[:name],
                                                            diff: exp[:diff],
