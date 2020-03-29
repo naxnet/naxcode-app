@@ -8,3 +8,51 @@
 <h5>
   submitted assignments
 </h5>
+
+<table  class="table table-striped">
+  <thead>
+    <tr>
+      <th>
+        User name
+      </th>
+      <th>
+        User email
+      </th>
+      <th>
+        Date
+      </th>
+      <th>
+        Compilation
+      </th>
+      <th>
+        Public cases
+      </th>
+      <th>
+        Private cases
+      </th>
+      <th>
+        Status
+      </th>
+      <th colspan="1">Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @assignment_user_results.each do |assignment_user_result| %>
+        <tr>
+            <td><%= assignment_user_result.user.name %></td>
+            <td><%= assignment_user_result.user.email %></td>
+            <td><%= assignment_user_result.assignment_user.created_at %></td>
+            <td><%= assignment_user_result.assignment_user.compilation_error %></td>
+            <td><%= assignment_user_result.assignment_user.public_score %> / <%= assignment_user_result.assignment_user.public_n_exps %></td>
+            <td><%= assignment_user_result.assignment_user.private_score %> / <%= assignment_user_result.assignment_user.private_n_exps %></td>
+            <td><%= assignment_user_result.assignment_user.status %></td>
+            <td>
+              <%= link_to [:professors, @course, @assignment, assignment_user_result.assignment_user], class: "btn btn-outline-warning" do %>
+                <%= fa_icon('eye', type: :solid, text: ' Show')  %>
+              <% end %>
+            </td>
+        </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -89,6 +89,9 @@
 #                                      rails_direct_uploads POST   /rails/active_storage/direct_uploads(.:format)                                                        active_storage/direct_uploads#create
 
 Rails.application.routes.draw do
+  namespace :professors do
+    get 'assignment_users/show'
+  end
   # require 'sidekiq/web'
   # mount Sidekiq::Web => '/sidekiq'
 
@@ -131,7 +134,10 @@ Rails.application.routes.draw do
           get :reject
         end
       end
-      resources :assignments, only: [:index, :show,  :new, :create, :edit, :update, :destroy]
+      resources :assignments, only: [:index, :show,  :new, :create, :edit, :update, :destroy] do
+        resources :assignment_users, only: [:show] do
+        end
+      end
     end
   end
 end

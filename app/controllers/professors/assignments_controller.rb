@@ -17,6 +17,7 @@ class Professors::AssignmentsController < ApplicationController
 
   def show
     add_breadcrumb @assignment.name, professors_course_assignment_path(@course, @assignment)
+    @assignment_user_results = @assignment.assignment_user_results
   end
 
   def edit
