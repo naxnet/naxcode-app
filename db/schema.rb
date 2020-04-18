@@ -12,7 +12,10 @@
 
 ActiveRecord::Schema.define(version: 2020_03_29_062011) do
 
-  create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
     t.bigint "record_id", null: false
@@ -22,7 +25,7 @@ ActiveRecord::Schema.define(version: 2020_03_29_062011) do
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
 
-  create_table "active_storage_blobs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "active_storage_blobs", force: :cascade do |t|
     t.string "key", null: false
     t.string "filename", null: false
     t.string "content_type"
@@ -33,7 +36,7 @@ ActiveRecord::Schema.define(version: 2020_03_29_062011) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "assignment_files", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "assignment_files", force: :cascade do |t|
     t.string "name"
     t.string "description"
     t.bigint "assignment_id", null: false
@@ -42,7 +45,7 @@ ActiveRecord::Schema.define(version: 2020_03_29_062011) do
     t.index ["assignment_id"], name: "index_assignment_files_on_assignment_id"
   end
 
-  create_table "assignment_user_files", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "assignment_user_files", force: :cascade do |t|
     t.bigint "assignment_user_id", null: false
     t.bigint "assignment_file_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -53,7 +56,7 @@ ActiveRecord::Schema.define(version: 2020_03_29_062011) do
     t.index ["assignment_user_id"], name: "index_assignment_user_files_on_assignment_user_id"
   end
 
-  create_table "assignment_user_private_results", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "assignment_user_private_results", force: :cascade do |t|
     t.string "name"
     t.text "diff"
     t.boolean "status", default: false
@@ -63,7 +66,7 @@ ActiveRecord::Schema.define(version: 2020_03_29_062011) do
     t.index ["assignment_user_id"], name: "index_assignment_user_private_results_on_assignment_user_id"
   end
 
-  create_table "assignment_user_public_results", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "assignment_user_public_results", force: :cascade do |t|
     t.string "name"
     t.text "diff"
     t.boolean "status", default: false
@@ -73,7 +76,7 @@ ActiveRecord::Schema.define(version: 2020_03_29_062011) do
     t.index ["assignment_user_id"], name: "index_assignment_user_public_results_on_assignment_user_id"
   end
 
-  create_table "assignment_user_results", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "assignment_user_results", force: :cascade do |t|
     t.bigint "assignment_id", null: false
     t.bigint "user_id", null: false
     t.bigint "assignment_user_id", null: false
@@ -86,7 +89,7 @@ ActiveRecord::Schema.define(version: 2020_03_29_062011) do
     t.index ["user_id"], name: "index_assignment_user_results_on_user_id"
   end
 
-  create_table "assignment_users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "assignment_users", force: :cascade do |t|
     t.bigint "assignment_id", null: false
     t.bigint "user_id", null: false
     t.integer "public_score", default: 0
@@ -103,11 +106,11 @@ ActiveRecord::Schema.define(version: 2020_03_29_062011) do
     t.index ["user_id"], name: "index_assignment_users_on_user_id"
   end
 
-  create_table "assignments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "assignments", force: :cascade do |t|
     t.string "name"
     t.bigint "course_id", null: false
-    t.timestamp "init_time"
-    t.timestamp "end_time"
+    t.datetime "init_time"
+    t.datetime "end_time"
     t.string "docker_image"
     t.integer "revision_grade_percentage"
     t.integer "private_grade_percentage"
@@ -118,7 +121,7 @@ ActiveRecord::Schema.define(version: 2020_03_29_062011) do
     t.index ["deleted_at"], name: "index_assignments_on_deleted_at"
   end
 
-  create_table "courses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "courses", force: :cascade do |t|
     t.string "name"
     t.string "short_id"
     t.datetime "deleted_at"
@@ -128,7 +131,7 @@ ActiveRecord::Schema.define(version: 2020_03_29_062011) do
     t.index ["short_id"], name: "index_courses_on_short_id"
   end
 
-  create_table "courses_professors", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "courses_professors", id: false, force: :cascade do |t|
     t.bigint "course_id", null: false
     t.bigint "professor_id", null: false
     t.index ["course_id", "professor_id"], name: "index_courses_professors_on_course_id_and_professor_id", unique: true
@@ -137,7 +140,7 @@ ActiveRecord::Schema.define(version: 2020_03_29_062011) do
     t.index ["professor_id"], name: "index_courses_professors_on_professor_id"
   end
 
-  create_table "courses_users", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "courses_users", id: false, force: :cascade do |t|
     t.bigint "course_id", null: false
     t.bigint "user_id", null: false
     t.index ["course_id", "user_id"], name: "index_courses_users_on_course_id_and_user_id", unique: true
@@ -146,7 +149,7 @@ ActiveRecord::Schema.define(version: 2020_03_29_062011) do
     t.index ["user_id"], name: "index_courses_users_on_user_id"
   end
 
-  create_table "professor_subscriptions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "professor_subscriptions", force: :cascade do |t|
     t.bigint "professor_id", null: false
     t.bigint "course_id", null: false
     t.integer "state", default: 0
@@ -158,7 +161,7 @@ ActiveRecord::Schema.define(version: 2020_03_29_062011) do
     t.index ["professor_id"], name: "index_professor_subscriptions_on_professor_id"
   end
 
-  create_table "professors", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "professors", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -172,7 +175,7 @@ ActiveRecord::Schema.define(version: 2020_03_29_062011) do
     t.index ["reset_password_token"], name: "index_professors_on_reset_password_token", unique: true
   end
 
-  create_table "user_subscriptions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "user_subscriptions", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "course_id", null: false
     t.integer "state", default: 0
@@ -184,7 +187,7 @@ ActiveRecord::Schema.define(version: 2020_03_29_062011) do
     t.index ["user_id"], name: "index_user_subscriptions_on_user_id"
   end
 
-  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
