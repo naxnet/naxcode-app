@@ -36,7 +36,7 @@ class AssignmentUser < ApplicationRecord
   after_create :assign_as_result
 
   def review
-    host = "http://190.47.216.31:3000"
+    host = ENV.fetch("ENV_URL")
     course_id = self.assignment.course.id
     assignment_id = self.assignment.id
     docker_image = self.assignment.docker_image
